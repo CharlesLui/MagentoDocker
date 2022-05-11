@@ -18,6 +18,7 @@ ENV COMPOSER_AUTH=$COMPOSER_AUTH
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN composer self-update --1
 RUN composer global require hirak/prestissimo
+RUN apk add patch
 
 RUN git clone $GIT_REPO  -b $BRANCH  --depth 1 . && \
     rm -rf .git
