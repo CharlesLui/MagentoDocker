@@ -6,6 +6,15 @@
 # RUN chmod 644 /root/.ssh/id_rsa.pub
 # RUN touch /root/.ssh/known_hosts
 # RUN ssh-keyscan git.corp.adobe.com >> /root/.ssh/known_hosts
+ARG BASE
+FROM $BASE AS build
+ARG COMPOSER_AUTH
+ARG BRANCH
+ARG GIT_REPO
+RUN apk update && apk add git bash
+ENV COMPOSER_ALLOW_SUPERUSER=1
+ENV COMPOSER_HOME=/var/composer
+ENV COMPOSER_AUTH=$COMPOSER_AUTH
 
 RUN git clone $GIT_REPO  -b $BRANCH  --depth 1 . && \
     rm -rf .git
